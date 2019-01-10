@@ -113,5 +113,38 @@ namespace DataStructures.LinkedList
             count++;
 
         }
+        /// <summary>
+        /// Remove node from tail of list.
+        /// </summary>
+        public void RemoveLast()
+        {
+            if (head == null || count == 0)
+                throw new ArgumentOutOfRangeException("empty");
+
+            if (count == 1)
+            {
+                head = null;
+            }
+            else
+            {
+                var current = head;
+                while (current.Link != null)
+                    current = current.Link;
+
+                current.Link = null;
+            }
+            count--;
+        }
+        /// <summary>
+        /// Remove node from head of list.
+        /// </summary>
+        public void RemoveFirst()
+        {
+            if (head == null || count==0)
+                throw new ArgumentOutOfRangeException("empty");
+
+            head = head.Link;
+            count--;
+        }
     }
 }
