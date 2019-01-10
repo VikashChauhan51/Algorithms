@@ -32,6 +32,19 @@ namespace DataStructures.LinkedList
 
         }
         /// <summary>
+        /// Instantiate with nodes.
+        /// </summary>
+        /// <param name="collection"> <see cref="IEnumerable{T}"/></param>
+        public SinglyLinkedList(IEnumerable<T> collection)
+        {
+            if (collection == null)
+                throw new ArgumentNullException("collection");
+
+            foreach (var item in collection)
+                AddFirst(new Node<T>(item));
+
+        }
+        /// <summary>
         /// Get top node.
         /// </summary>
         /// <returns><see cref="Node{T}"/></returns>
@@ -50,6 +63,18 @@ namespace DataStructures.LinkedList
                 current = current.Link;
 
             return current;
+        }
+        public T GetFirst()
+        {
+            return head != null ? head.Data : default(T);
+        }
+        public T GetLast()
+        {
+            var current = head;
+            while (current.Link != null)
+                current = current.Link;
+
+            return current != null ? current.Data : default(T);
         }
         /// <summary>
         /// Get list count.
@@ -74,6 +99,9 @@ namespace DataStructures.LinkedList
         /// <param name="node"></param>
         public void AddFirst(Node<T> node)
         {
+            if (node == null)
+                throw new ArgumentNullException("node");
+
             //Add first node.
             if (head == null)
             {
@@ -89,12 +117,23 @@ namespace DataStructures.LinkedList
 
             count++;
         }
+        public void AddFirst(T item)
+        {
+            if (item == null)
+                throw new ArgumentNullException("item");
+
+            AddFirst(new Node<T>(item));
+
+        }
         /// <summary>
         /// Add node tail of list.
         /// </summary>
         /// <param name="node"></param>
         public void AddLast(Node<T> node)
         {
+            if (node == null)
+                throw new ArgumentNullException("node");
+
             //Add first node.
             if (head == null)
             {
@@ -111,6 +150,14 @@ namespace DataStructures.LinkedList
             }
 
             count++;
+
+        }
+        public void AddLast(T item)
+        {
+            if (item == null)
+                throw new ArgumentNullException("item");
+
+            AddLast(new Node<T>(item));
 
         }
         /// <summary>
@@ -140,11 +187,49 @@ namespace DataStructures.LinkedList
         /// </summary>
         public void RemoveFirst()
         {
-            if (head == null || count==0)
+            if (head == null || count == 0)
                 throw new ArgumentOutOfRangeException("empty");
 
             head = head.Link;
             count--;
+        }
+
+        public IEnumerable<T> Get()
+        {
+            var current = head;
+            while (current != null)
+            {
+                yield return current.Data;
+                current = current.Link;
+            }
+
+        }
+        public bool Contains(T item)
+        {
+            var current = head;
+            while (current != null)
+            {
+                if (current.Data.Equals(item))
+                    return true;
+
+                current = current.Link;
+            }
+            return false;
+        }
+
+        public void CopyTo(T[] array, int index)
+        {
+            var current = head;
+            while (current != null)
+            {
+                array[index++] = current.Data;
+                current = current.Link;
+            }
+        }
+        public void Clear()
+        {
+            head = null;
+            count = 0;
         }
     }
 }

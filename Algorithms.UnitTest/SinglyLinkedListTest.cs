@@ -132,7 +132,7 @@ namespace Algorithms.UnitTest
                 source.Add(new Node<int>(i));
 
             var list = new SinglyLinkedList<int>(source);
-            
+
             Assert.AreEqual(list.First().Data, 1000, "invalid head element");
             Assert.AreEqual(list.Last().Data, 1, "invalid tail element");
             Assert.AreEqual(list.Count(), 1000, "invalid count");
@@ -141,7 +141,7 @@ namespace Algorithms.UnitTest
         [ExpectedException(typeof(ArgumentNullException), "Null collection doesn't allow.")]
         public void AddNullCollection()
         {
-            var list = new SinglyLinkedList<int>(null);
+            var list = new SinglyLinkedList<int>((List<Node<int>>)null);
         }
 
         [TestCleanup]
