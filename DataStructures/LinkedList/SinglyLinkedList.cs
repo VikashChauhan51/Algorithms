@@ -175,10 +175,15 @@ namespace DataStructures.LinkedList
             else
             {
                 var current = head;
+                Node<T> pre = null;
                 while (current.Link != null)
-                    current = current.Link;
-
+                {
+                    pre = current;
+                    current = current?.Link;
+                }
+                pre.Link = current?.Link;
                 current.Link = null;
+                
             }
             count--;
         }
@@ -194,6 +199,34 @@ namespace DataStructures.LinkedList
             count--;
         }
 
+        public void Remove(T item)
+        {
+            var current = head;
+            Node<T> prev = null;
+            // If head node itself holds the key to be deleted 
+            if (current != null && current.Data.Equals(item))
+            {
+                head = current.Link;   // Changed head 
+                current = null;       // free old head 
+                return;
+            }
+
+            // Search for the key to be deleted, keep track of the 
+            // previous node as we need to change 'prev->next' 
+            while (current != null && !current.Data.Equals(item))
+            {
+                prev = current;
+                current = current.Link;
+            }
+
+            // If key was not present in linked list 
+            if (current == null) return;
+
+            // Unlink the node from linked list 
+            prev.Link = current.Link;
+
+            count--;
+        }
         public IEnumerable<T> Get()
         {
             var current = head;

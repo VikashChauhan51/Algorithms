@@ -144,6 +144,76 @@ namespace Algorithms.UnitTest
             var list = new SinglyLinkedList<int>((List<Node<int>>)null);
         }
 
+        [TestMethod]
+        public void GetListItems()
+        {
+            int j = 0;
+            for (int i = 1; i <= 5; i++)
+                singlyLinkedList.AddLast(new Node<int>(i));
+
+            foreach (var item in singlyLinkedList.Get())
+                j++;
+
+            Assert.AreEqual(j, 5, "invalid count");
+        }
+
+        [TestMethod]
+        public void RemoveItem()
+        {
+            for (int i = 1; i <= 5; i++)
+                singlyLinkedList.AddLast(new Node<int>(i));
+
+            singlyLinkedList.Remove(5);
+
+            Assert.AreEqual(singlyLinkedList.Count(), 4, "invalid count");
+            Assert.AreEqual(singlyLinkedList.Last().Data, 4, "invalid tail element");
+
+        }
+        [TestMethod]
+        [DataRow(1)]
+        [DataRow(2)]
+        [DataRow(3)]
+        [DataRow(4)]
+        [DataRow(5)]
+        public void RemoveItem(int item)
+        {
+            for (int i = 1; i <= 5; i++)
+                singlyLinkedList.AddLast(new Node<int>(i));
+
+            singlyLinkedList.Remove(item);
+
+            Assert.AreEqual(singlyLinkedList.Count(), 4, "invalid count");
+            Assert.IsFalse(singlyLinkedList.Contains(item), "invalid list");
+
+        }
+        [TestMethod]
+        public void RemovedFirst()
+        {
+            for (int i = 1; i <= 1000; i++)
+                singlyLinkedList.AddFirst(new Node<int>(i));
+
+            singlyLinkedList.RemoveFirst();
+
+            Assert.AreEqual(singlyLinkedList.Count(), 999, "invalid count");
+            Assert.AreEqual(singlyLinkedList.First().Data, 999, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.Last().Data, 1, "invalid tail element");
+
+        }
+
+        [TestMethod]
+        public void RemovedLast()
+        {
+            for (int i = 1; i <= 1000; i++)
+                singlyLinkedList.AddLast(new Node<int>(i));
+
+            singlyLinkedList.RemoveLast();
+
+            Assert.AreEqual(singlyLinkedList.Count(), 999, "invalid count");
+            Assert.AreEqual(singlyLinkedList.First().Data, 1, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.Last().Data, 999, "invalid tail element");
+
+        }
+
         [TestCleanup]
         public void TestCleanup()
         {
