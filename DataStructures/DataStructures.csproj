@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LinkedList\DoublyLinkedList.cs" />
+    <Compile Include="LinkedList\DoublyNode.cs" />
     <Compile Include="LinkedList\SinglyLinkedList.cs" />
     <Compile Include="LinkedList\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

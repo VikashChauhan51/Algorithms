@@ -38,68 +38,63 @@ namespace Algorithms.UnitTest
         [TestMethod]
         public void AddFirstNode()
         {
-            var dds = TestContext.CurrentTestOutcome;
-            var node = new Node<int>(1);
-            singlyLinkedList.AddFirst(node);
+            singlyLinkedList.AddFirst(1);
             Assert.IsNotNull(singlyLinkedList.First(), "Linked List is empty");
         }
         [TestMethod]
         public void AddTwoNodesHead()
         {
-            var firstNode = new Node<int>(1);
-            var SecondNode = new Node<int>(2);
-            singlyLinkedList.AddFirst(firstNode);
-            singlyLinkedList.AddFirst(SecondNode);
-            Assert.AreEqual(singlyLinkedList.First().Data, SecondNode.Data, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last().Data, firstNode.Data, "invalid tail element");
+            singlyLinkedList.AddFirst(1);
+            singlyLinkedList.AddFirst(2);
+            Assert.AreEqual(singlyLinkedList.First(), 2, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.Last(), 1, "invalid tail element");
         }
         [TestMethod]
         public void AddTwoNodesToTail()
         {
-            var firstNode = new Node<int>(1);
-            var SecondNode = new Node<int>(2);
-            singlyLinkedList.AddLast(firstNode);
-            singlyLinkedList.AddLast(SecondNode);
-            Assert.AreEqual(singlyLinkedList.First().Data, firstNode.Data, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last().Data, SecondNode.Data, "invalid tail element");
+
+            singlyLinkedList.AddLast(1);
+            singlyLinkedList.AddLast(2);
+            Assert.AreEqual(singlyLinkedList.First(), 1, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.Last(), 2, "invalid tail element");
         }
         [TestMethod]
         public void AddFiveNodesHead()
         {
             for (int i = 1; i <= 5; i++)
-                singlyLinkedList.AddFirst(new Node<int>(i));
+                singlyLinkedList.AddFirst(i);
 
-            Assert.AreEqual(singlyLinkedList.First().Data, 5, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last().Data, 1, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.First(), 5, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.Last(), 1, "invalid tail element");
             Assert.AreEqual(singlyLinkedList.Count(), 5, "invalid count");
         }
         [TestMethod]
         public void AddFiveNodesToTail()
         {
             for (int i = 1; i <= 5; i++)
-                singlyLinkedList.AddLast(new Node<int>(i));
+                singlyLinkedList.AddLast(i);
 
-            Assert.AreEqual(singlyLinkedList.First().Data, 1, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last().Data, 5, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.First(), 1, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.Last(), 5, "invalid tail element");
             Assert.AreEqual(singlyLinkedList.Count(), 5, "invalid count");
         }
         [DataTestMethod]
         [SinglyLinkedListDataSource]
-        public void VerifyAddNodesHead(Node<int> node)
+        public void VerifyAddNodesHead(int item)
         {
-            singlyLinkedList.AddFirst(node);
+            singlyLinkedList.AddFirst(item);
 
-            Assert.AreEqual(singlyLinkedList.First().Data, node.Data, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.First(), item, "invalid head element");
 
 
         }
         [DataTestMethod]
         [SinglyLinkedListDataSource]
-        public void VerifyAddNodesToTail(Node<int> node)
+        public void VerifyAddNodesToTail(int item)
         {
-            singlyLinkedList.AddLast(node);
+            singlyLinkedList.AddLast(item);
 
-            Assert.AreEqual(singlyLinkedList.Last().Data, node.Data, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.Last(), item, "invalid tail element");
 
         }
 
@@ -107,10 +102,10 @@ namespace Algorithms.UnitTest
         public void VerifyAddNodesHeadTime()
         {
             for (int i = 1; i <= 1000; i++)
-                singlyLinkedList.AddFirst(new Node<int>(i));
+                singlyLinkedList.AddFirst(i);
 
-            Assert.AreEqual(singlyLinkedList.First().Data, 1000, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last().Data, 1, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.First(), 1000, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.Last(), 1, "invalid tail element");
             Assert.AreEqual(singlyLinkedList.Count(), 1000, "invalid count");
         }
 
@@ -118,30 +113,30 @@ namespace Algorithms.UnitTest
         public void VerifyAddNodesToTailTime()
         {
             for (int i = 1; i <= 1000; i++)
-                singlyLinkedList.AddLast(new Node<int>(i));
+                singlyLinkedList.AddLast(i);
 
-            Assert.AreEqual(singlyLinkedList.First().Data, 1, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last().Data, 1000, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.First(), 1, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.Last(), 1000, "invalid tail element");
             Assert.AreEqual(singlyLinkedList.Count(), 1000, "invalid count");
         }
         [TestMethod]
         public void AddBulkNodes()
         {
-            List<Node<int>> source = new List<Node<int>>();
+            List<int> source = new List<int>();
             for (int i = 1; i <= 1000; i++)
-                source.Add(new Node<int>(i));
+                source.Add(i);
 
             var list = new SinglyLinkedList<int>(source);
 
-            Assert.AreEqual(list.First().Data, 1000, "invalid head element");
-            Assert.AreEqual(list.Last().Data, 1, "invalid tail element");
+            Assert.AreEqual(list.First(), 1000, "invalid head element");
+            Assert.AreEqual(list.Last(), 1, "invalid tail element");
             Assert.AreEqual(list.Count(), 1000, "invalid count");
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException), "Null collection doesn't allow.")]
         public void AddNullCollection()
         {
-            var list = new SinglyLinkedList<int>((List<Node<int>>)null);
+            var list = new SinglyLinkedList<int>(null);
         }
 
         [TestMethod]
@@ -149,7 +144,7 @@ namespace Algorithms.UnitTest
         {
             int j = 0;
             for (int i = 1; i <= 5; i++)
-                singlyLinkedList.AddLast(new Node<int>(i));
+                singlyLinkedList.AddLast(i);
 
             foreach (var item in singlyLinkedList.Get())
                 j++;
@@ -161,12 +156,12 @@ namespace Algorithms.UnitTest
         public void RemoveItem()
         {
             for (int i = 1; i <= 5; i++)
-                singlyLinkedList.AddLast(new Node<int>(i));
+                singlyLinkedList.AddLast(i);
 
             singlyLinkedList.Remove(5);
 
             Assert.AreEqual(singlyLinkedList.Count(), 4, "invalid count");
-            Assert.AreEqual(singlyLinkedList.Last().Data, 4, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.Last(), 4, "invalid tail element");
 
         }
         [TestMethod]
@@ -178,7 +173,7 @@ namespace Algorithms.UnitTest
         public void RemoveItem(int item)
         {
             for (int i = 1; i <= 5; i++)
-                singlyLinkedList.AddLast(new Node<int>(i));
+                singlyLinkedList.AddLast(i);
 
             singlyLinkedList.Remove(item);
 
@@ -190,13 +185,13 @@ namespace Algorithms.UnitTest
         public void RemovedFirst()
         {
             for (int i = 1; i <= 1000; i++)
-                singlyLinkedList.AddFirst(new Node<int>(i));
+                singlyLinkedList.AddFirst(i);
 
             singlyLinkedList.RemoveFirst();
 
             Assert.AreEqual(singlyLinkedList.Count(), 999, "invalid count");
-            Assert.AreEqual(singlyLinkedList.First().Data, 999, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last().Data, 1, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.First(), 999, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.Last(), 1, "invalid tail element");
 
         }
 
@@ -204,13 +199,13 @@ namespace Algorithms.UnitTest
         public void RemovedLast()
         {
             for (int i = 1; i <= 1000; i++)
-                singlyLinkedList.AddLast(new Node<int>(i));
+                singlyLinkedList.AddLast(i);
 
             singlyLinkedList.RemoveLast();
 
             Assert.AreEqual(singlyLinkedList.Count(), 999, "invalid count");
-            Assert.AreEqual(singlyLinkedList.First().Data, 1, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last().Data, 999, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.First(), 1, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.Last(), 999, "invalid tail element");
 
         }
 
@@ -224,27 +219,27 @@ namespace Algorithms.UnitTest
     {
         public IEnumerable<object[]> GetData(MethodInfo methodInfo)
         {
-            yield return new object[] { new Node<int>(1) };
-            yield return new object[] { new Node<int>(2) };
-            yield return new object[] { new Node<int>(3) };
-            yield return new object[] { new Node<int>(4) };
-            yield return new object[] { new Node<int>(5) };
-            yield return new object[] { new Node<int>(6) };
-            yield return new object[] { new Node<int>(7) };
-            yield return new object[] { new Node<int>(8) };
-            yield return new object[] { new Node<int>(9) };
-            yield return new object[] { new Node<int>(10) };
-            yield return new object[] { new Node<int>(11) };
-            yield return new object[] { new Node<int>(12) };
-            yield return new object[] { new Node<int>(13) };
-            yield return new object[] { new Node<int>(14) };
-            yield return new object[] { new Node<int>(3) };
-            yield return new object[] { new Node<int>(15) };
-            yield return new object[] { new Node<int>(16) };
-            yield return new object[] { new Node<int>(17) };
-            yield return new object[] { new Node<int>(18) };
-            yield return new object[] { new Node<int>(19) };
-            yield return new object[] { new Node<int>(20) };
+            yield return new object[] { 1 };
+            yield return new object[] { 2 };
+            yield return new object[] { 3 };
+            yield return new object[] { 4 };
+            yield return new object[] { 5 };
+            yield return new object[] { 6 };
+            yield return new object[] { 7 };
+            yield return new object[] { 8 };
+            yield return new object[] { 9 };
+            yield return new object[] { 10 };
+            yield return new object[] { 11 };
+            yield return new object[] { 12 };
+            yield return new object[] { 13 };
+            yield return new object[] { 14 };
+            yield return new object[] { 3};
+            yield return new object[] { 15 };
+            yield return new object[] { 16 };
+            yield return new object[] { 17 };
+            yield return new object[] { 18 };
+            yield return new object[] { 19 };
+            yield return new object[] { 20 };
         }
 
         public string GetDisplayName(MethodInfo methodInfo, object[] data)

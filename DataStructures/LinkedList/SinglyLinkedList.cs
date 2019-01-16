@@ -21,8 +21,8 @@ namespace DataStructures.LinkedList
         /// <summary>
         /// Instantiate with nodes.
         /// </summary>
-        /// <param name="collection"> <see cref="IEnumerable{Node<typeparamref name="T"/>}"/></param>
-        public SinglyLinkedList(IEnumerable<Node<T>> collection)
+        /// <param name="collection"> <see cref="IEnumerable{T}"/></param>
+        public SinglyLinkedList(IEnumerable<T> collection)
         {
             if (collection == null)
                 throw new ArgumentNullException("collection");
@@ -32,37 +32,24 @@ namespace DataStructures.LinkedList
 
         }
         /// <summary>
-        /// Instantiate with nodes.
-        /// </summary>
-        /// <param name="collection"> <see cref="IEnumerable{T}"/></param>
-        public SinglyLinkedList(IEnumerable<T> collection)
-        {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-
-            foreach (var item in collection)
-                AddFirst(new Node<T>(item));
-
-        }
-        /// <summary>
         /// Get top node.
         /// </summary>
-        /// <returns><see cref="Node{T}"/></returns>
-        public Node<T> First()
+        /// <returns></returns>
+        public T First()
         {
-            return head;
+            return head != null ? head.Data : default(T);
         }
         /// <summary>
         /// Get last node.
         /// </summary>
-        /// <returns><see cref="Node{T}"/></returns>
-        public Node<T> Last()
+        /// <returns></returns>
+        public T Last()
         {
             var current = head;
             while (current.Link != null)
                 current = current.Link;
 
-            return current;
+            return current != null ? current.Data : default(T);
         }
         public T GetFirst()
         {
@@ -96,11 +83,13 @@ namespace DataStructures.LinkedList
         /// <summary>
         /// Add node head of the list.
         /// </summary>
-        /// <param name="node"></param>
-        public void AddFirst(Node<T> node)
+        /// <param name="item"></param>
+        public void AddFirst(T item)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
+            if (item == null)
+                throw new ArgumentNullException("item");
+            //create node.
+            var node = new Node<T>(item);
 
             //Add first node.
             if (head == null)
@@ -117,23 +106,17 @@ namespace DataStructures.LinkedList
 
             count++;
         }
-        public void AddFirst(T item)
-        {
-            if (item == null)
-                throw new ArgumentNullException("item");
 
-            AddFirst(new Node<T>(item));
-
-        }
         /// <summary>
         /// Add node tail of list.
         /// </summary>
-        /// <param name="node"></param>
-        public void AddLast(Node<T> node)
+        /// <param name="item"></param>
+        public void AddLast(T item)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
-
+            if (item == null)
+                throw new ArgumentNullException("item");
+            //create node.
+            var node = new Node<T>(item);
             //Add first node.
             if (head == null)
             {
@@ -152,14 +135,7 @@ namespace DataStructures.LinkedList
             count++;
 
         }
-        public void AddLast(T item)
-        {
-            if (item == null)
-                throw new ArgumentNullException("item");
 
-            AddLast(new Node<T>(item));
-
-        }
         /// <summary>
         /// Remove node from tail of list.
         /// </summary>
@@ -183,7 +159,7 @@ namespace DataStructures.LinkedList
                 }
                 pre.Link = current?.Link;
                 current.Link = null;
-                
+
             }
             count--;
         }

@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace DataStructures.LinkedList
 {
-    internal class Node<T>
+    internal class DoublyNode<T>
     {
-        public Node(T data)
+        public DoublyNode(T data)
         {
             this.Data = data;
         }
         public T Data { get; set; }
-        public Node<T> Link { get; set; }
+        public DoublyNode<T> Next { get; set; }
+        public DoublyNode<T> Prev { get; set; }
     }
 }
