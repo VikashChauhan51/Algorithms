@@ -25,7 +25,7 @@ namespace DataStructures.LinkedList
         public SinglyLinkedList(IEnumerable<T> collection)
         {
             if (collection == null)
-                throw new ArgumentNullException("collection");
+                throw new ArgumentNullException(nameof(collection));
 
             foreach (var item in collection)
                 AddFirst(item);
@@ -67,27 +67,20 @@ namespace DataStructures.LinkedList
         /// Get list count.
         /// </summary>
         /// <returns></returns>
-        public long Count()
-        {
-            return count;
+        public long Count()=> count;
 
-        }
         /// <summary>
         /// Check is list empty.
         /// </summary>
         /// <returns></returns>
-        public bool IsEmpty()
-        {
-            return head == null;
-        }
+        public bool IsEmpty() => head == null;
+
         /// <summary>
         /// Add node head of the list.
         /// </summary>
         /// <param name="item"></param>
         public void AddFirst(T item)
-        {
-            if (item == null)
-                throw new ArgumentNullException("item");
+        { 
             //create node.
             var node = new Node<T>(item);
 
@@ -112,9 +105,7 @@ namespace DataStructures.LinkedList
         /// </summary>
         /// <param name="item"></param>
         public void AddLast(T item)
-        {
-            if (item == null)
-                throw new ArgumentNullException("item");
+        { 
             //create node.
             var node = new Node<T>(item);
             //Add first node.
@@ -135,14 +126,56 @@ namespace DataStructures.LinkedList
             count++;
 
         }
+        public void AddBefore(T nodeData, T item)
+        {
+            var current = head;
+            var node = new Node<T>(item);
+            if (IsNull(head.Data,item) || head.Data.Equals(nodeData))
+            {
+                node.Link = current;
+                head = node;
+                count++;
+            }
+            else
+            {
+                while (current.Link != null)
+                {
+                    var perv = current;
+                    if (IsNull(current.Link.Data, item) || current.Link.Data.Equals(nodeData))
+                    {
+                        node.Link = current.Link;
+                        perv.Link = node;
+                        count++;
+                        return;
+                    }
+                    current = current.Link;
+                }
+            }
+        }
+        public void AddAfter(T nodeData, T item)
+        {
+            var current = head;
 
+            while (current != null)
+            {
+                if (IsNull(current.Data, item) || current.Data.Equals(nodeData))
+                {
+                    var node = new Node<T>(item);
+                    node.Link = current.Link;
+                    current.Link = node;
+                    count++;
+                    return;
+                }
+                current = current.Link;
+            }
+        }
         /// <summary>
         /// Remove node from tail of list.
         /// </summary>
         public void RemoveLast()
         {
             if (head == null || count == 0)
-                throw new ArgumentOutOfRangeException("empty");
+                throw new ArgumentOutOfRangeException(nameof(head));
 
             if (count == 1)
             {
@@ -169,7 +202,7 @@ namespace DataStructures.LinkedList
         public void RemoveFirst()
         {
             if (head == null || count == 0)
-                throw new ArgumentOutOfRangeException("empty");
+                throw new ArgumentOutOfRangeException(nameof(head));
 
             head = head.Link;
             count--;
@@ -180,16 +213,17 @@ namespace DataStructures.LinkedList
             var current = head;
             Node<T> prev = null;
             // If head node itself holds the key to be deleted 
-            if (current != null && current.Data.Equals(item))
+            if (current != null && (IsNull(current.Data, item) || current.Data.Equals(item)))
             {
                 head = current.Link;   // Changed head 
                 current = null;       // free old head 
+                count--;
                 return;
             }
 
             // Search for the key to be deleted, keep track of the 
             // previous node as we need to change 'prev->next' 
-            while (current != null && !current.Data.Equals(item))
+            while (current != null && !(IsNull(current.Data, item) || current.Data.Equals(item)))
             {
                 prev = current;
                 current = current.Link;
@@ -218,7 +252,7 @@ namespace DataStructures.LinkedList
             var current = head;
             while (current != null)
             {
-                if (current.Data.Equals(item))
+                if (IsNull(current.Data, item) || current.Data.Equals(item))
                     return true;
 
                 current = current.Link;
@@ -235,6 +269,8 @@ namespace DataStructures.LinkedList
                 current = current.Link;
             }
         }
+        private bool IsNull(T source,T item)=> source == null && item == null;
+
         public void Clear()
         {
             head = null;

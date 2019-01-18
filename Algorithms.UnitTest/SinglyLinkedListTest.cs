@@ -209,6 +209,48 @@ namespace Algorithms.UnitTest
 
         }
 
+        [TestMethod]
+        [DataRow(1,7)]
+        [DataRow(3, 7)]
+        [DataRow(5, 7)]
+        public void AddAfter(int oldItem,int item)
+        {
+            for (int i = 1; i <= 5; i++)
+                singlyLinkedList.AddLast(i);
+
+            singlyLinkedList.AddAfter(oldItem, item);
+
+            Assert.AreEqual(singlyLinkedList.Count(), 6, "invalid count");
+            Assert.IsTrue(singlyLinkedList.Contains(item), "Item doesn't exists.");
+        }
+        [TestMethod]
+        [DataRow(1, 7)]
+        [DataRow(3, 7)]
+        [DataRow(5, 7)]
+        public void AddBefore(int oldItem, int item)
+        {
+            for (int i = 1; i <= 5; i++)
+                singlyLinkedList.AddLast(i);
+
+            singlyLinkedList.AddBefore(oldItem, item);
+
+            Assert.AreEqual(singlyLinkedList.Count(), 6, "invalid count");
+            Assert.IsTrue(singlyLinkedList.Contains(item), "Item doesn't exists.");
+        }
+        [TestMethod]
+        public void AddNullItem()
+        {
+            var list = new SinglyLinkedList<string>();
+            list.AddFirst(null);
+            list.AddLast(null);
+            list.AddAfter(null,null);
+            list.AddBefore(null, null);
+            Assert.AreEqual(list.Count(), 4, "invalid count");
+            list.Remove(null);
+            list.RemoveFirst();
+            list.RemoveLast();
+            Assert.AreEqual(list.Count(), 1, "invalid count");
+        }
         [TestCleanup]
         public void TestCleanup()
         {

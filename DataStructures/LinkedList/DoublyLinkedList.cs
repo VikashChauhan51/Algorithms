@@ -66,6 +66,7 @@ namespace DataStructures.LinkedList
             node.Prev = last;
 
         }
+       
         /// <summary>
         /// Get list count.
         /// </summary>
