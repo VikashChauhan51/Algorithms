@@ -39,15 +39,15 @@ namespace Algorithms.UnitTest
         public void AddFirstNode()
         {
             singlyLinkedList.AddFirst(1);
-            Assert.IsNotNull(singlyLinkedList.First(), "Linked List is empty");
+            Assert.IsNotNull(singlyLinkedList.GetFirst(), "Linked List is empty");
         }
         [TestMethod]
         public void AddTwoNodesHead()
         {
             singlyLinkedList.AddFirst(1);
             singlyLinkedList.AddFirst(2);
-            Assert.AreEqual(singlyLinkedList.First(), 2, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last(), 1, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.GetFirst(), 2, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.GetLast(), 1, "invalid tail element");
         }
         [TestMethod]
         public void AddTwoNodesToTail()
@@ -55,8 +55,8 @@ namespace Algorithms.UnitTest
 
             singlyLinkedList.AddLast(1);
             singlyLinkedList.AddLast(2);
-            Assert.AreEqual(singlyLinkedList.First(), 1, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last(), 2, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.GetFirst(), 1, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.GetLast(), 2, "invalid tail element");
         }
         [TestMethod]
         public void AddFiveNodesHead()
@@ -64,8 +64,8 @@ namespace Algorithms.UnitTest
             for (int i = 1; i <= 5; i++)
                 singlyLinkedList.AddFirst(i);
 
-            Assert.AreEqual(singlyLinkedList.First(), 5, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last(), 1, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.GetFirst(), 5, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.GetLast(), 1, "invalid tail element");
             Assert.AreEqual(singlyLinkedList.Count(), 5, "invalid count");
         }
         [TestMethod]
@@ -74,8 +74,8 @@ namespace Algorithms.UnitTest
             for (int i = 1; i <= 5; i++)
                 singlyLinkedList.AddLast(i);
 
-            Assert.AreEqual(singlyLinkedList.First(), 1, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last(), 5, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.GetFirst(), 1, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.GetLast(), 5, "invalid tail element");
             Assert.AreEqual(singlyLinkedList.Count(), 5, "invalid count");
         }
         [DataTestMethod]
@@ -84,7 +84,7 @@ namespace Algorithms.UnitTest
         {
             singlyLinkedList.AddFirst(item);
 
-            Assert.AreEqual(singlyLinkedList.First(), item, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.GetFirst(), item, "invalid head element");
 
 
         }
@@ -94,7 +94,7 @@ namespace Algorithms.UnitTest
         {
             singlyLinkedList.AddLast(item);
 
-            Assert.AreEqual(singlyLinkedList.Last(), item, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.GetLast(), item, "invalid tail element");
 
         }
 
@@ -104,8 +104,8 @@ namespace Algorithms.UnitTest
             for (int i = 1; i <= 1000; i++)
                 singlyLinkedList.AddFirst(i);
 
-            Assert.AreEqual(singlyLinkedList.First(), 1000, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last(), 1, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.GetFirst(), 1000, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.GetLast(), 1, "invalid tail element");
             Assert.AreEqual(singlyLinkedList.Count(), 1000, "invalid count");
         }
 
@@ -115,8 +115,8 @@ namespace Algorithms.UnitTest
             for (int i = 1; i <= 1000; i++)
                 singlyLinkedList.AddLast(i);
 
-            Assert.AreEqual(singlyLinkedList.First(), 1, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last(), 1000, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.GetFirst(), 1, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.GetLast(), 1000, "invalid tail element");
             Assert.AreEqual(singlyLinkedList.Count(), 1000, "invalid count");
         }
         [TestMethod]
@@ -128,8 +128,8 @@ namespace Algorithms.UnitTest
 
             var list = new SinglyLinkedList<int>(source);
 
-            Assert.AreEqual(list.First(), 1000, "invalid head element");
-            Assert.AreEqual(list.Last(), 1, "invalid tail element");
+            Assert.AreEqual(list.GetFirst(), 1000, "invalid head element");
+            Assert.AreEqual(list.GetLast(), 1, "invalid tail element");
             Assert.AreEqual(list.Count(), 1000, "invalid count");
         }
         [TestMethod]
@@ -161,7 +161,7 @@ namespace Algorithms.UnitTest
             singlyLinkedList.Remove(5);
 
             Assert.AreEqual(singlyLinkedList.Count(), 4, "invalid count");
-            Assert.AreEqual(singlyLinkedList.Last(), 4, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.GetLast(), 4, "invalid tail element");
 
         }
         [TestMethod]
@@ -182,7 +182,7 @@ namespace Algorithms.UnitTest
 
         }
         [TestMethod]
-        public void RemovedFirst()
+        public void RemovedGetFirst()
         {
             for (int i = 1; i <= 1000; i++)
                 singlyLinkedList.AddFirst(i);
@@ -190,13 +190,13 @@ namespace Algorithms.UnitTest
             singlyLinkedList.RemoveFirst();
 
             Assert.AreEqual(singlyLinkedList.Count(), 999, "invalid count");
-            Assert.AreEqual(singlyLinkedList.First(), 999, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last(), 1, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.GetFirst(), 999, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.GetLast(), 1, "invalid tail element");
 
         }
 
         [TestMethod]
-        public void RemovedLast()
+        public void RemovedGetLast()
         {
             for (int i = 1; i <= 1000; i++)
                 singlyLinkedList.AddLast(i);
@@ -204,8 +204,8 @@ namespace Algorithms.UnitTest
             singlyLinkedList.RemoveLast();
 
             Assert.AreEqual(singlyLinkedList.Count(), 999, "invalid count");
-            Assert.AreEqual(singlyLinkedList.First(), 1, "invalid head element");
-            Assert.AreEqual(singlyLinkedList.Last(), 999, "invalid tail element");
+            Assert.AreEqual(singlyLinkedList.GetFirst(), 1, "invalid head element");
+            Assert.AreEqual(singlyLinkedList.GetLast(), 999, "invalid tail element");
 
         }
 

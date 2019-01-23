@@ -31,37 +31,26 @@ namespace DataStructures.LinkedList
                 AddFirst(item);
 
         }
+         
         /// <summary>
-        /// Get top node.
+        /// Get top node data.
         /// </summary>
         /// <returns></returns>
-        public T First()
+        public T GetFirst()
         {
-            return head != null ? head.Data : default(T);
+            return GetData(head);
         }
         /// <summary>
         /// Get last node.
         /// </summary>
         /// <returns></returns>
-        public T Last()
-        {
-            var current = head;
-            while (current.Link != null)
-                current = current.Link;
-
-            return current != null ? current.Data : default(T);
-        }
-        public T GetFirst()
-        {
-            return head != null ? head.Data : default(T);
-        }
         public T GetLast()
         {
             var current = head;
             while (current.Link != null)
                 current = current.Link;
 
-            return current != null ? current.Data : default(T);
+            return GetData(current);
         }
         /// <summary>
         /// Get list count.
@@ -130,7 +119,7 @@ namespace DataStructures.LinkedList
         {
             var current = head;
             var node = new Node<T>(item);
-            if (IsNull(head.Data,item) || head.Data.Equals(nodeData))
+            if (IsEquals(head.Data, nodeData))
             {
                 node.Link = current;
                 head = node;
@@ -141,7 +130,7 @@ namespace DataStructures.LinkedList
                 while (current.Link != null)
                 {
                     var perv = current;
-                    if (IsNull(current.Link.Data, item) || current.Link.Data.Equals(nodeData))
+                    if (IsEquals(current.Link.Data, nodeData))
                     {
                         node.Link = current.Link;
                         perv.Link = node;
@@ -158,7 +147,7 @@ namespace DataStructures.LinkedList
 
             while (current != null)
             {
-                if (IsNull(current.Data, item) || current.Data.Equals(nodeData))
+                if (IsEquals(current.Data, nodeData))
                 {
                     var node = new Node<T>(item);
                     node.Link = current.Link;
@@ -213,7 +202,7 @@ namespace DataStructures.LinkedList
             var current = head;
             Node<T> prev = null;
             // If head node itself holds the key to be deleted 
-            if (current != null && (IsNull(current.Data, item) || current.Data.Equals(item)))
+            if (current != null && (IsEquals(current.Data, item)))
             {
                 head = current.Link;   // Changed head 
                 current = null;       // free old head 
@@ -223,7 +212,7 @@ namespace DataStructures.LinkedList
 
             // Search for the key to be deleted, keep track of the 
             // previous node as we need to change 'prev->next' 
-            while (current != null && !(IsNull(current.Data, item) || current.Data.Equals(item)))
+            while (current != null && !(IsEquals(current.Data, item)))
             {
                 prev = current;
                 current = current.Link;
@@ -252,7 +241,7 @@ namespace DataStructures.LinkedList
             var current = head;
             while (current != null)
             {
-                if (IsNull(current.Data, item) || current.Data.Equals(item))
+                if (IsEquals(current.Data, item))
                     return true;
 
                 current = current.Link;
@@ -269,12 +258,13 @@ namespace DataStructures.LinkedList
                 current = current.Link;
             }
         }
-        private bool IsNull(T source,T item)=> source == null && item == null;
 
         public void Clear()
         {
             head = null;
             count = 0;
         }
+        private bool IsEquals(T source, T item) => (source == null && item == null) || source.Equals(item);
+        private T GetData(Node<T> node) => node != null ? node.Data : default(T);
     }
 }
