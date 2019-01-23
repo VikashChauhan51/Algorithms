@@ -144,11 +144,16 @@ namespace Algorithms.UnitTest
         }
 
         [TestMethod]
-        public void GetListItems()
+        [DataRow(true)]
+        [DataRow(false)]
+        public void GetListItems(bool addFirst)
         {
             int j = 0;
             for (int i = 1; i <= 5; i++)
-                doublyLinkedListTest.AddLast(i);
+                if (addFirst)
+                    doublyLinkedListTest.AddFirst(i);
+                else
+                    doublyLinkedListTest.AddLast(i);
 
             foreach (var item in doublyLinkedListTest.Get())
                 j++;

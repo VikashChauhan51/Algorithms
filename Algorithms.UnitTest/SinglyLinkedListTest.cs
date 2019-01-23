@@ -140,11 +140,16 @@ namespace Algorithms.UnitTest
         }
 
         [TestMethod]
-        public void GetListItems()
+        [DataRow(true)]
+        [DataRow(false)]
+        public void GetListItems(bool addFirst)
         {
             int j = 0;
             for (int i = 1; i <= 5; i++)
-                singlyLinkedList.AddLast(i);
+                if (addFirst)
+                    singlyLinkedList.AddFirst(i);
+                else
+                    singlyLinkedList.AddLast(i);
 
             foreach (var item in singlyLinkedList.Get())
                 j++;
@@ -182,7 +187,7 @@ namespace Algorithms.UnitTest
 
         }
         [TestMethod]
-        public void RemovedGetFirst()
+        public void RemovedFirst()
         {
             for (int i = 1; i <= 1000; i++)
                 singlyLinkedList.AddFirst(i);
@@ -196,7 +201,7 @@ namespace Algorithms.UnitTest
         }
 
         [TestMethod]
-        public void RemovedGetLast()
+        public void RemovedLast()
         {
             for (int i = 1; i <= 1000; i++)
                 singlyLinkedList.AddLast(i);
