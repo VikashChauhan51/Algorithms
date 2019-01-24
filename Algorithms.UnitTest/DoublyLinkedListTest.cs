@@ -179,6 +179,7 @@ namespace Algorithms.UnitTest
         [DataRow(3)]
         [DataRow(4)]
         [DataRow(5)]
+        [DataRow(7)]
         public void RemoveItem(int item)
         {
             for (int i = 1; i <= 5; i++)
@@ -260,6 +261,71 @@ namespace Algorithms.UnitTest
             list.RemoveFirst();
             list.RemoveLast();
             Assert.AreEqual(list.Count(), 1, "invalid count");
+        }
+
+        [TestMethod]
+        public void CheckListEmpty()
+        {
+            int j = 0;
+            foreach (var item in doublyLinkedListTest.Get())
+                j++;
+
+            Assert.AreEqual(0, j, "Invalid count.");
+            Assert.IsFalse(doublyLinkedListTest.Contains(2), "list contains some item(s)");
+        }
+        [TestMethod]
+        public void CheckListLastItem()
+        {
+            for (int i = 1; i <= 5; i++)
+                doublyLinkedListTest.AddLast(i);
+
+            Assert.AreEqual(doublyLinkedListTest.GetLast(), 5, "invalid tail element");
+            Assert.IsTrue(doublyLinkedListTest.Contains(5), "list doesn't contains element");
+
+        }
+        [TestMethod]
+        public void CopyToArray()
+        {
+            var arr = new int[5];
+            for (int i = 1; i <= 5; i++)
+                doublyLinkedListTest.AddLast(i);
+
+            doublyLinkedListTest.CopyTo(arr, 0);
+            Assert.AreEqual(arr[0], 1, "invalid first item");
+            Assert.AreEqual(arr[4], 5, "invalid last item");
+        }
+        [TestMethod]
+        public void CopyEmptyListToArray()
+        {
+            var arr = new int[1];
+            doublyLinkedListTest.CopyTo(arr, 0);
+
+            Assert.AreEqual(arr[0], 0, "invalid item");
+        }
+
+        [TestMethod]
+        public void AddBeforeInEmptyList()
+        {
+            doublyLinkedListTest.AddBefore(2, 4);
+
+            Assert.AreEqual(doublyLinkedListTest.Count(), 0, "invalid count");
+            Assert.IsFalse(doublyLinkedListTest.Contains(4), "Item exists.");
+        }
+
+        [TestMethod]
+        public void AddAfterInEmptyList()
+        {
+            doublyLinkedListTest.AddAfter(2, 4);
+
+            Assert.AreEqual(doublyLinkedListTest.Count(), 0, "invalid count");
+            Assert.IsFalse(doublyLinkedListTest.Contains(4), "Item exists.");
+        }
+
+        [TestMethod]
+        public void RemoveFromEmptyList()
+        {
+            doublyLinkedListTest.Remove(5);
+            Assert.AreEqual(doublyLinkedListTest.Count(), 0, "invalid item");
         }
 
         [TestCleanup]

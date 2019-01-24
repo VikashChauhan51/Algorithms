@@ -192,6 +192,144 @@ namespace Algorithms.UnitTest
             Assert.AreEqual(circularSinglyLinkedList.GetLast(), 999, "invalid tail element");
 
         }
+        [TestMethod]
+        public void RemoveItem()
+        {
+            for (int i = 1; i <= 5; i++)
+                circularSinglyLinkedList.AddLast(i);
+
+            circularSinglyLinkedList.Remove(5);
+
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 4, "invalid count");
+            Assert.AreEqual(circularSinglyLinkedList.GetLast(), 4, "invalid tail element");
+
+        }
+        [TestMethod]
+        [DataRow(1)]
+        [DataRow(2)]
+        [DataRow(3)]
+        [DataRow(4)]
+        [DataRow(5)]
+        [DataRow(7)]
+        public void RemoveItem(int item)
+        {
+            for (int i = 1; i <= 5; i++)
+                circularSinglyLinkedList.AddLast(i);
+
+            circularSinglyLinkedList.Remove(item);
+
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 4, "invalid count");
+            Assert.IsFalse(circularSinglyLinkedList.Contains(item), "invalid list");
+
+        }
+
+        [TestMethod]
+        [DataRow(1, 7)]
+        [DataRow(3, 7)]
+        [DataRow(5, 7)]
+        public void AddAfter(int oldItem, int item)
+        {
+            for (int i = 1; i <= 5; i++)
+                circularSinglyLinkedList.AddLast(i);
+
+            circularSinglyLinkedList.AddAfter(oldItem, item);
+
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 6, "invalid count");
+            Assert.IsTrue(circularSinglyLinkedList.Contains(item), "Item doesn't exists.");
+        }
+        [TestMethod]
+        [DataRow(1, 7)]
+        [DataRow(3, 7)]
+        [DataRow(5, 7)]
+        public void AddBefore(int oldItem, int item)
+        {
+            for (int i = 1; i <= 5; i++)
+                circularSinglyLinkedList.AddLast(i);
+
+            circularSinglyLinkedList.AddBefore(oldItem, item);
+
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 6, "invalid count");
+            Assert.IsTrue(circularSinglyLinkedList.Contains(item), "Item doesn't exists.");
+        }
+
+        [TestMethod]
+        public void AddBeforeInEmptyList()
+        {
+            circularSinglyLinkedList.AddBefore(2, 4);
+
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 0, "invalid count");
+            Assert.IsFalse(circularSinglyLinkedList.Contains(4), "Item exists.");
+        }
+
+        [TestMethod]
+        public void AddAfterInEmptyList()
+        {
+            circularSinglyLinkedList.AddAfter(2, 4);
+
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 0, "invalid count");
+            Assert.IsFalse(circularSinglyLinkedList.Contains(4), "Item exists.");
+        }
+
+        [TestMethod]
+        public void AddNullItem()
+        {
+            var list = new SinglyLinkedList<string>();
+            list.AddFirst(null);
+            list.AddLast(null);
+            list.AddAfter(null, null);
+            list.AddBefore(null, null);
+            Assert.AreEqual(list.Count(), 4, "invalid count");
+            list.Remove(null);
+            list.RemoveFirst();
+            list.RemoveLast();
+            Assert.AreEqual(list.Count(), 1, "invalid count");
+        }
+        [TestMethod]
+        public void CheckListEmpty()
+        {
+            int j = 0;
+            foreach (var item in circularSinglyLinkedList.Get())
+                j++;
+
+            Assert.AreEqual(0, j, "Invalid count.");
+            Assert.IsFalse(circularSinglyLinkedList.Contains(2), "list contains some item(s)");
+        }
+        [TestMethod]
+        public void CheckListLastItem()
+        {
+            for (int i = 1; i <= 5; i++)
+                circularSinglyLinkedList.AddLast(i);
+
+            Assert.AreEqual(circularSinglyLinkedList.GetLast(), 5, "invalid tail element");
+            Assert.IsTrue(circularSinglyLinkedList.Contains(5), "list doesn't contains element");
+
+        }
+        [TestMethod]
+        public void CopyToArray()
+        {
+            var arr = new int[5];
+            for (int i = 1; i <= 5; i++)
+                circularSinglyLinkedList.AddLast(i);
+
+            circularSinglyLinkedList.CopyTo(arr, 0);
+            Assert.AreEqual(arr[0], 1, "invalid first item");
+            Assert.AreEqual(arr[4], 5, "invalid last item");
+        }
+        [TestMethod]
+        public void CopyEmptyListToArray()
+        {
+            var arr = new int[1];
+            circularSinglyLinkedList.CopyTo(arr, 0);
+
+            Assert.AreEqual(arr[0], 0, "invalid item");
+        }
+
+        [TestMethod]
+        public void RemoveFromEmptyList()
+        {
+            circularSinglyLinkedList.Remove(5);
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 0, "invalid item");
+        }
 
         [TestCleanup]
         public void TestCleanup()

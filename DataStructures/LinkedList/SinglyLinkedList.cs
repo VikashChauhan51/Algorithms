@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataStructures.LinkedList
 {
-    public class SinglyLinkedList<T>
+    public class SinglyLinkedList<T> : SinglyLinkedListBase<T>
     {
-        private Node<T> head;
-        private long count;
-
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -31,20 +28,8 @@ namespace DataStructures.LinkedList
                 AddFirst(item);
 
         }
-         
-        /// <summary>
-        /// Get top node data.
-        /// </summary>
-        /// <returns></returns>
-        public T GetFirst()
-        {
-            return GetData(head);
-        }
-        /// <summary>
-        /// Get last node.
-        /// </summary>
-        /// <returns></returns>
-        public T GetLast()
+  
+        public override T GetLast()
         {
             var current = head;
             while (current.Link != null)
@@ -52,24 +37,14 @@ namespace DataStructures.LinkedList
 
             return GetData(current);
         }
-        /// <summary>
-        /// Get list count.
-        /// </summary>
-        /// <returns></returns>
-        public long Count()=> count;
 
-        /// <summary>
-        /// Check is list empty.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsEmpty() => head == null;
 
         /// <summary>
         /// Add node head of the list.
         /// </summary>
         /// <param name="item"></param>
-        public void AddFirst(T item)
-        { 
+        public override void AddFirst(T item)
+        {
             //create node.
             var node = new Node<T>(item);
 
@@ -93,8 +68,8 @@ namespace DataStructures.LinkedList
         /// Add node tail of list.
         /// </summary>
         /// <param name="item"></param>
-        public void AddLast(T item)
-        { 
+        public override void AddLast(T item)
+        {
             //create node.
             var node = new Node<T>(item);
             //Add first node.
@@ -115,19 +90,20 @@ namespace DataStructures.LinkedList
             count++;
 
         }
-        public void AddBefore(T nodeData, T item)
+        public override bool AddBefore(T nodeData, T item)
         {
             var current = head;
             var node = new Node<T>(item);
-            if (IsEquals(head.Data, nodeData))
+            if (current != null && IsEquals(current.Data, nodeData))
             {
                 node.Link = current;
                 head = node;
                 count++;
+                return true;
             }
             else
             {
-                while (current.Link != null)
+                while (current != null && current.Link != null)
                 {
                     var perv = current;
                     if (IsEquals(current.Link.Data, nodeData))
@@ -135,13 +111,14 @@ namespace DataStructures.LinkedList
                         node.Link = current.Link;
                         perv.Link = node;
                         count++;
-                        return;
+                        return true;
                     }
                     current = current.Link;
                 }
             }
+            return false;
         }
-        public void AddAfter(T nodeData, T item)
+        public override bool AddAfter(T nodeData, T item)
         {
             var current = head;
 
@@ -153,18 +130,20 @@ namespace DataStructures.LinkedList
                     node.Link = current.Link;
                     current.Link = node;
                     count++;
-                    return;
+                    return true;
                 }
                 current = current.Link;
             }
+
+            return false;
         }
         /// <summary>
         /// Remove node from tail of list.
         /// </summary>
-        public void RemoveLast()
+        public override bool RemoveLast()
         {
             if (head == null || count == 0)
-                throw new ArgumentOutOfRangeException(nameof(head));
+                return false;
 
             if (count == 1)
             {
@@ -184,20 +163,22 @@ namespace DataStructures.LinkedList
 
             }
             count--;
+            return true;
         }
         /// <summary>
         /// Remove node from head of list.
         /// </summary>
-        public void RemoveFirst()
+        public override bool RemoveFirst()
         {
             if (head == null || count == 0)
-                throw new ArgumentOutOfRangeException(nameof(head));
+                return false;
 
             head = head.Link;
             count--;
+            return true;
         }
 
-        public void Remove(T item)
+        public override bool Remove(T item)
         {
             var current = head;
             Node<T> prev = null;
@@ -207,7 +188,7 @@ namespace DataStructures.LinkedList
                 head = current.Link;   // Changed head 
                 current = null;       // free old head 
                 count--;
-                return;
+                return true;
             }
 
             // Search for the key to be deleted, keep track of the 
@@ -219,14 +200,15 @@ namespace DataStructures.LinkedList
             }
 
             // If key was not present in linked list 
-            if (current == null) return;
+            if (current == null) return false;
 
             // Unlink the node from linked list 
             prev.Link = current.Link;
 
             count--;
+            return true;
         }
-        public IEnumerable<T> Get()
+        public override IEnumerable<T> Get()
         {
             var current = head;
             while (current != null)
@@ -236,7 +218,7 @@ namespace DataStructures.LinkedList
             }
 
         }
-        public bool Contains(T item)
+        public override bool Contains(T item)
         {
             var current = head;
             while (current != null)
@@ -249,7 +231,7 @@ namespace DataStructures.LinkedList
             return false;
         }
 
-        public void CopyTo(T[] array, int index)
+        public override void CopyTo(T[] array, int index)
         {
             var current = head;
             while (current != null)
@@ -259,12 +241,6 @@ namespace DataStructures.LinkedList
             }
         }
 
-        public void Clear()
-        {
-            head = null;
-            count = 0;
-        }
-        private bool IsEquals(T source, T item) => (source == null && item == null) || source.Equals(item);
-        private T GetData(Node<T> node) => node != null ? node.Data : default(T);
+
     }
 }

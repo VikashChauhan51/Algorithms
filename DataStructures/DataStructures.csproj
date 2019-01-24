@@ -43,9 +43,12 @@
   <ItemGroup>
     <Compile Include="LinkedList\CircularSinglyLinkedList.cs" />
     <Compile Include="LinkedList\DoublyLinkedList.cs" />
+    <Compile Include="LinkedList\DoublyLinkedListBase.cs" />
     <Compile Include="LinkedList\DoublyNode.cs" />
+    <Compile Include="LinkedList\LinkedListBase.cs" />
     <Compile Include="LinkedList\SinglyLinkedList.cs" />
     <Compile Include="LinkedList\Node.cs" />
+    <Compile Include="LinkedList\SinglyLinkedListBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
