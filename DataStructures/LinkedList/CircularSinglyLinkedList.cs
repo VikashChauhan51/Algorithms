@@ -199,38 +199,40 @@ namespace DataStructures.LinkedList
         public bool IsEmpty() => head == null;
         public IEnumerable<T> Get()
         {
-             var current = head;
-            while (current!=null && current.Link != head)
+           var current = head;
+            do
             {
-                yield return current.Data;
-                current = current.Link;
-            }
+                yield return GetData(current);
 
-            yield return GetData(current);
+                current = current.Link;
+
+            } while (current != head);
 
         }
         public bool Contains(T item)
         {
            var current = head;
-            while (current != null && current.Link != head)
+            do
             {
                 if (IsEquals(current.Data, item))
                     return true;
 
                 current = current.Link;
-            }
-            return IsEquals(current.Data, item);
+
+            } while (current != head);
+
+            return false;
         }
 
         public void CopyTo(T[] array, int index)
         {
             var current = head;
-            while (current != null && current.Link != head)
+            do
             {
-                array[index++] = current.Data;
+                array[index++] = GetData(current);
                 current = current.Link;
-            }
-            array[index++] = GetData(current);
+
+            } while (current != head);
         }
 
         public void Clear()
