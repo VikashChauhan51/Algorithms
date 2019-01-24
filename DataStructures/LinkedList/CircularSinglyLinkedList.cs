@@ -111,7 +111,7 @@ namespace DataStructures.LinkedList
                     current = current?.Link;
                 }
                 pre.Link = current?.Link;
-                current.Link = head;
+                current = pre;
 
             }
             count--;
@@ -134,6 +134,38 @@ namespace DataStructures.LinkedList
             count--;
         }
 
+ public void AddBefore(T nodeData, T item)
+        {
+            var current = head;
+            var node = new Node<T>(item);
+            if (IsEquals(head.Data, nodeData))
+            {
+                while (current.Link != head)
+                    current = current.Link;
+
+                node.Link = head;
+                head = node;
+
+                current.Link = node;
+                count++;
+            }
+            else
+            {
+                while (current.Link != head)
+                {
+                    var perv = current;
+                    if (IsEquals(current.Link.Data, nodeData))
+                    {
+                        node.Link = current.Link;
+                        perv.Link = node;
+                        count++;
+                        return;
+                    }
+                    current = current.Link;
+                }
+            }
+        }
+        
         /// <summary>
         /// Get top node data.
         /// </summary>
@@ -167,37 +199,38 @@ namespace DataStructures.LinkedList
         public bool IsEmpty() => head == null;
         public IEnumerable<T> Get()
         {
-            var current = head;
-            while (current.Link != head)
+             var current = head;
+            while (current!=null && current.Link != head)
             {
                 yield return current.Data;
                 current = current.Link;
             }
 
-            yield return current.Data;
+            yield return GetData(current);
 
         }
         public bool Contains(T item)
         {
-            var current = head;
-            while (current != null)
+           var current = head;
+            while (current != null && current.Link != head)
             {
                 if (IsEquals(current.Data, item))
                     return true;
 
                 current = current.Link;
             }
-            return false;
+            return IsEquals(current.Data, item);
         }
 
         public void CopyTo(T[] array, int index)
         {
             var current = head;
-            while (current != null)
+            while (current != null && current.Link != head)
             {
                 array[index++] = current.Data;
                 current = current.Link;
             }
+            array[index++] = GetData(current);
         }
 
         public void Clear()
