@@ -158,7 +158,7 @@ namespace Algorithms.UnitTest
         }
 
         [TestMethod]
-        public void RemoveItem()
+        public void RemoveOnlyOneItem()
         {
             for (int i = 1; i <= 5; i++)
                 singlyLinkedList.AddLast(i);
@@ -167,6 +167,30 @@ namespace Algorithms.UnitTest
 
             Assert.AreEqual(singlyLinkedList.Count(), 4, "invalid count");
             Assert.AreEqual(singlyLinkedList.GetLast(), 4, "invalid tail element");
+
+        }
+        [TestMethod]
+        public void RemoveFirstItemOnly()
+        {
+            singlyLinkedList.AddFirst(1);
+
+            singlyLinkedList.RemoveFirst();
+
+            Assert.AreEqual(singlyLinkedList.Count(), 0, "invalid count");
+            Assert.AreEqual(singlyLinkedList.GetLast(), 0, "invalid tail element");
+            Assert.IsFalse(singlyLinkedList.Contains(1), "invalid list");
+
+        }
+        [TestMethod]
+        public void RemoveLastItemOnly()
+        {
+            singlyLinkedList.AddLast(1);
+
+            singlyLinkedList.RemoveLast();
+
+            Assert.AreEqual(singlyLinkedList.Count(), 0, "invalid count");
+            Assert.AreEqual(singlyLinkedList.GetLast(), 0, "invalid tail element");
+            Assert.IsFalse(singlyLinkedList.Contains(1), "invalid list");
 
         }
         [TestMethod]
@@ -183,7 +207,11 @@ namespace Algorithms.UnitTest
 
             singlyLinkedList.Remove(item);
 
-            Assert.AreEqual(singlyLinkedList.Count(), 4, "invalid count");
+            if (item != 7)
+                Assert.AreEqual(singlyLinkedList.Count(), 4, "invalid count");
+            else
+                Assert.AreEqual(singlyLinkedList.Count(), 5, "invalid count");
+
             Assert.IsFalse(singlyLinkedList.Contains(item), "invalid list");
 
         }
@@ -216,10 +244,10 @@ namespace Algorithms.UnitTest
         }
 
         [TestMethod]
-        [DataRow(1,7)]
+        [DataRow(1, 7)]
         [DataRow(3, 7)]
         [DataRow(5, 7)]
-        public void AddAfter(int oldItem,int item)
+        public void AddAfter(int oldItem, int item)
         {
             for (int i = 1; i <= 5; i++)
                 singlyLinkedList.AddLast(i);
@@ -249,7 +277,7 @@ namespace Algorithms.UnitTest
             var list = new SinglyLinkedList<string>();
             list.AddFirst(null);
             list.AddLast(null);
-            list.AddAfter(null,null);
+            list.AddAfter(null, null);
             list.AddBefore(null, null);
             Assert.AreEqual(list.Count(), 4, "invalid count");
             list.Remove(null);
@@ -318,10 +346,47 @@ namespace Algorithms.UnitTest
 
 
         [TestMethod]
+        public void AddBeforeInSingleItemList()
+        {
+             singlyLinkedList.AddFirst(1);
+            singlyLinkedList.AddBefore(1, 4);
+
+            Assert.AreEqual(singlyLinkedList.Count(), 2, "invalid count");
+            Assert.IsTrue(singlyLinkedList.Contains(4), "Item doesn't exists.");
+        }
+
+        [TestMethod]
+        public void AddAfterInSingleItemList()
+        {
+            singlyLinkedList.AddFirst(1);
+            singlyLinkedList.AddAfter(1, 4);
+
+            Assert.AreEqual(singlyLinkedList.Count(), 2, "invalid count");
+            Assert.IsTrue(singlyLinkedList.Contains(4), "Item doesn't exists.");
+        }
+
+        [TestMethod]
         public void RemoveFromEmptyList()
         {
             singlyLinkedList.Remove(5);
             Assert.AreEqual(singlyLinkedList.Count(), 0, "invalid item");
+        }
+
+        [TestMethod]
+        public void RemoveFromSingleItemList()
+        {
+            singlyLinkedList.AddFirst(1);
+            singlyLinkedList.Remove(1);
+            Assert.AreEqual(singlyLinkedList.Count(), 0, "invalid item");
+            Assert.IsFalse(singlyLinkedList.Contains(1), "Item exists.");
+        }
+
+        [TestMethod]
+        public void CheckLastItemFromEmptyList()
+        {
+            var item = singlyLinkedList.GetLast();
+
+            Assert.AreEqual(item, 0, "invalid item");
         }
 
         [TestCleanup]
@@ -348,7 +413,7 @@ namespace Algorithms.UnitTest
             yield return new object[] { 12 };
             yield return new object[] { 13 };
             yield return new object[] { 14 };
-            yield return new object[] { 3};
+            yield return new object[] { 3 };
             yield return new object[] { 15 };
             yield return new object[] { 16 };
             yield return new object[] { 17 };

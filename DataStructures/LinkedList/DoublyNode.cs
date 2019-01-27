@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures.LinkedList
 {
-    public class DoublyNode<T>
+    public sealed class DoublyNode<T>
     {
         public DoublyNode(T data)
         {

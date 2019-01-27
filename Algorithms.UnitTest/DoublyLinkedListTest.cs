@@ -162,7 +162,7 @@ namespace Algorithms.UnitTest
         }
 
         [TestMethod]
-        public void RemoveItem()
+        public void RemoveOnlyOneItem()
         {
             for (int i = 1; i <= 5; i++)
                 doublyLinkedListTest.AddLast(i);
@@ -187,7 +187,11 @@ namespace Algorithms.UnitTest
 
             doublyLinkedListTest.Remove(item);
 
-            Assert.AreEqual(doublyLinkedListTest.Count(), 4, "invalid count");
+            if (item != 7)
+                Assert.AreEqual(doublyLinkedListTest.Count(), 4, "invalid count");
+            else
+                Assert.AreEqual(doublyLinkedListTest.Count(), 5, "invalid count");
+
             Assert.IsFalse(doublyLinkedListTest.Contains(item), "invalid list");
 
         }
@@ -219,6 +223,30 @@ namespace Algorithms.UnitTest
 
         }
 
+        [TestMethod]
+        public void RemoveFirstItemOnly()
+        {
+            doublyLinkedListTest.AddFirst(1);
+
+            doublyLinkedListTest.RemoveFirst();
+
+            Assert.AreEqual(doublyLinkedListTest.Count(), 0, "invalid count");
+            Assert.AreEqual(doublyLinkedListTest.GetLast(), 0, "invalid tail element");
+            Assert.IsFalse(doublyLinkedListTest.Contains(1), "invalid list");
+
+        }
+        [TestMethod]
+        public void RemoveLastItemOnly()
+        {
+            doublyLinkedListTest.AddLast(1);
+
+            doublyLinkedListTest.RemoveLast();
+
+            Assert.AreEqual(doublyLinkedListTest.Count(), 0, "invalid count");
+            Assert.AreEqual(doublyLinkedListTest.GetLast(), 0, "invalid tail element");
+            Assert.IsFalse(doublyLinkedListTest.Contains(1), "invalid list");
+
+        }
 
         [TestMethod]
         [DataRow(1, 7)]
@@ -261,6 +289,35 @@ namespace Algorithms.UnitTest
             list.RemoveFirst();
             list.RemoveLast();
             Assert.AreEqual(list.Count(), 1, "invalid count");
+        }
+
+        [TestMethod]
+        public void AddBeforeInSingleItemList()
+        {
+            doublyLinkedListTest.AddFirst(1);
+            doublyLinkedListTest.AddBefore(1, 4);
+
+            Assert.AreEqual(doublyLinkedListTest.Count(), 2, "invalid count");
+            Assert.IsTrue(doublyLinkedListTest.Contains(4), "Item doesn't exists.");
+        }
+
+        [TestMethod]
+        public void AddAfterInSingleItemList()
+        {
+            doublyLinkedListTest.AddLast(1);
+            doublyLinkedListTest.AddAfter(1, 4);
+
+            Assert.AreEqual(doublyLinkedListTest.Count(), 2, "invalid count");
+            Assert.IsTrue(doublyLinkedListTest.Contains(4), "Item doesn't exists.");
+        }
+
+        [TestMethod]
+        public void RemoveFromSingleItemList()
+        {
+            doublyLinkedListTest.AddFirst(1);
+            doublyLinkedListTest.Remove(1);
+            Assert.AreEqual(doublyLinkedListTest.Count(), 0, "invalid item");
+            Assert.IsFalse(doublyLinkedListTest.Contains(1), "Item exists.");
         }
 
         [TestMethod]
@@ -326,6 +383,14 @@ namespace Algorithms.UnitTest
         {
             doublyLinkedListTest.Remove(5);
             Assert.AreEqual(doublyLinkedListTest.Count(), 0, "invalid item");
+        }
+
+        [TestMethod]
+        public void CheckLastItemFromEmptyList()
+        {
+            var item = doublyLinkedListTest.GetLast();
+
+            Assert.AreEqual(item, 0, "invalid item");
         }
 
         [TestCleanup]

@@ -46,13 +46,11 @@ namespace DataStructures.LinkedList
             }
             else
             {
-                var current = head;
-                while (current.Link != head)
-                    current = current.Link;
+                var last = GetLastNode();
 
                 node.Link = head;
                 head = node;
-                current.Link = head;
+                last.Link = head;
 
             }
 
@@ -75,11 +73,9 @@ namespace DataStructures.LinkedList
             }
             else
             {
-                var current = head;
-                while (current.Link != head)
-                    current = current.Link;
+                var last = GetLastNode();
 
-                current.Link = node;
+                last.Link = node;
                 node.Link = head;
             }
 
@@ -123,12 +119,10 @@ namespace DataStructures.LinkedList
             if (head == null || count == 0)
                 return false;
 
-            var current = head;
-            while (current.Link != head)
-                current = current.Link;
-
-            head = head.Link;
-            current.Link = head;
+            var last = GetLastNode();
+            //check list having only one item.
+            head = head.Link != head ? head.Link : null;
+            last.Link = count > 1 ? head : null;
 
             count--;
             return true;
@@ -138,34 +132,32 @@ namespace DataStructures.LinkedList
         {
             var current = head;
             Node<T> prev = null;
-            // If head node itself holds the key to be deleted 
-            if (current != null && (IsEquals(current.Data, item)))
-            {
-                while (current.Link != head) //loop till end.
-                    current = current.Link;
 
-                head = head.Link;
-                current.Link = head;
-                count--;
-                return true;
-            }
-
-            // Search for the key to be deleted, keep track of the 
-            // previous node as we need to change 'prev->next' 
-            while (current != null && !(IsEquals(current.Data, item)))
+            do
             {
+                if (current != null && (IsEquals(current.Data, item)))
+                {
+                    var last = GetLastNode();
+
+                    if (prev == null)
+                    {
+                        //check list having only one item.
+                        head = head.Link != head ? head.Link : null;
+                        last.Link = count > 1 ? head : null;
+                    }
+                    else
+                    {
+                        prev.Link = current.Link;
+                    }
+                    count--;
+                    return true;
+                }
+
                 prev = current;
-                current = current.Link;
-            }
+                current = current?.Link;
+            } while (current != head);
 
-            // If key was not present in linked list 
-            if (current == null) return false;
-
-            // Unlink the node from linked list 
-            prev.Link = current.Link;
-
-            count--;
-            return true;
+            return false;
         }
 
         public override bool AddBefore(T nodeData, T item)
@@ -174,13 +166,11 @@ namespace DataStructures.LinkedList
             var node = new Node<T>(item);
             if (current != null && IsEquals(current.Data, nodeData))
             {
-                while (current.Link != head)//loop till end.
-                    current = current.Link;
-
+                var last = GetLastNode();
                 node.Link = head;
                 head = node;
 
-                current.Link = node;
+                last.Link = node;
                 count++;
                 return true;
             }
@@ -219,15 +209,8 @@ namespace DataStructures.LinkedList
             return false;
         }
  
-        public override T GetLast()
-        {
-            var current = head;
-            while (current.Link != head)
-                current = current.Link;
+        public override T GetLast()=> GetData(GetLastNode());
 
-            return GetData(current);
-        }
-        
         public override IEnumerable<T> Get()
         {
             var current = head;
@@ -266,6 +249,15 @@ namespace DataStructures.LinkedList
                 current = current?.Link;
 
             } while (current != head);
+        }
+
+        private Node<T> GetLastNode()
+        {
+            var current = head;
+            while (current != null && current.Link != head)
+                current = current.Link;
+
+            return current;
         }
  
     }

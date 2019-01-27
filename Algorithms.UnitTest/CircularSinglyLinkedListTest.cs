@@ -192,8 +192,43 @@ namespace Algorithms.UnitTest
             Assert.AreEqual(circularSinglyLinkedList.GetLast(), 999, "invalid tail element");
 
         }
+
         [TestMethod]
-        public void RemoveItem()
+        public void RemoveFirstItemOnly()
+        {
+            circularSinglyLinkedList.AddFirst(1);
+
+            circularSinglyLinkedList.RemoveFirst();
+
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 0, "invalid count");
+            Assert.AreEqual(circularSinglyLinkedList.GetLast(), 0, "invalid tail element");
+            Assert.IsFalse(circularSinglyLinkedList.Contains(1), "invalid list");
+
+        }
+        [TestMethod]
+        public void RemoveLastItemOnly()
+        {
+            circularSinglyLinkedList.AddLast(1);
+
+            circularSinglyLinkedList.RemoveLast();
+
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 0, "invalid count");
+            Assert.AreEqual(circularSinglyLinkedList.GetLast(), 0, "invalid tail element");
+            Assert.IsFalse(circularSinglyLinkedList.Contains(1), "invalid list");
+
+        }
+
+        [TestMethod]
+        public void RemoveFromSingleItemList()
+        {
+            circularSinglyLinkedList.AddFirst(1);
+            circularSinglyLinkedList.Remove(1);
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 0, "invalid item");
+            Assert.IsFalse(circularSinglyLinkedList.Contains(1), "Item exists.");
+        }
+
+        [TestMethod]
+        public void RemoveOnlyOneItem()
         {
             for (int i = 1; i <= 5; i++)
                 circularSinglyLinkedList.AddLast(i);
@@ -218,7 +253,11 @@ namespace Algorithms.UnitTest
 
             circularSinglyLinkedList.Remove(item);
 
-            Assert.AreEqual(circularSinglyLinkedList.Count(), 4, "invalid count");
+            if (item != 7)
+                Assert.AreEqual(circularSinglyLinkedList.Count(), 4, "invalid count");
+            else
+                Assert.AreEqual(circularSinglyLinkedList.Count(), 5, "invalid count");
+
             Assert.IsFalse(circularSinglyLinkedList.Contains(item), "invalid list");
 
         }
@@ -250,6 +289,26 @@ namespace Algorithms.UnitTest
 
             Assert.AreEqual(circularSinglyLinkedList.Count(), 6, "invalid count");
             Assert.IsTrue(circularSinglyLinkedList.Contains(item), "Item doesn't exists.");
+        }
+
+        [TestMethod]
+        public void AddBeforeInSingleItemList()
+        {
+            circularSinglyLinkedList.AddFirst(1);
+            circularSinglyLinkedList.AddBefore(1, 4);
+
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 2, "invalid count");
+            Assert.IsTrue(circularSinglyLinkedList.Contains(4), "Item doesn't exists.");
+        }
+
+        [TestMethod]
+        public void AddAfterInSingleItemList()
+        {
+            circularSinglyLinkedList.AddLast(1);
+            circularSinglyLinkedList.AddAfter(1, 4);
+
+            Assert.AreEqual(circularSinglyLinkedList.Count(), 2, "invalid count");
+            Assert.IsTrue(circularSinglyLinkedList.Contains(4), "Item doesn't exists.");
         }
 
         [TestMethod]
@@ -329,6 +388,14 @@ namespace Algorithms.UnitTest
         {
             circularSinglyLinkedList.Remove(5);
             Assert.AreEqual(circularSinglyLinkedList.Count(), 0, "invalid item");
+        }
+
+        [TestMethod]
+        public void CheckLastItemFromEmptyList()
+        {
+            var item = circularSinglyLinkedList.GetLast();
+
+            Assert.AreEqual(item, 0, "invalid item");
         }
 
         [TestCleanup]

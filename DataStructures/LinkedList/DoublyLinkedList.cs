@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataStructures.LinkedList
 {
-    public class DoublyLinkedList<T>: DoublyLinkedListBase<T>
+    public class DoublyLinkedList<T> : DoublyLinkedListBase<T>
     {
-         
+
         public DoublyLinkedList()
         {
 
@@ -29,7 +29,7 @@ namespace DataStructures.LinkedList
 
         public override void AddFirst(T item)
         {
-  
+
             //create node.
             var node = new DoublyNode<T>(item);
             // Make next of new node as head and previous as null.
@@ -47,10 +47,9 @@ namespace DataStructures.LinkedList
 
         public override void AddLast(T item)
         {
-          
+
             //create node.
             var node = new DoublyNode<T>(item);
-            var  last = head;
 
             /* This new node is going to be the last node, so 
              * make next of it as null*/
@@ -66,9 +65,7 @@ namespace DataStructures.LinkedList
                 return;
             }
 
-            //Else traverse till the last node
-            while (last.Next != null)
-                last = last.Next;
+            var last = GetLastNode();
 
             //Change the next of last node 
             last.Next = node;
@@ -83,30 +80,30 @@ namespace DataStructures.LinkedList
         {
             var current = head;
             var node = new DoublyNode<T>(item);
-            if (current != null && IsEquals(current.Data, nodeData))
+            do
             {
-                current.Prev = node;
-                node.Next = current;
-                head = node;
-                count++;
-                return true;
-            }
-            else
-            {
-                while (current != null && current.Next != null)
+                if (current != null && IsEquals(current.Data, nodeData))
                 {
-
-                    if (IsEquals(current.Next.Data, nodeData))
+                    node.Next = current;
+                    if (current == head)
                     {
-                        node.Next = current.Next;
-                        node.Prev = current;
-                        current.Next = node;
-                        count++;
-                        return true;
+                        current.Prev = node;
+                        head = node;
                     }
-                    current = current.Next;
+                    else
+                    {
+                        node.Prev = current.Prev;
+                        current.Prev.Next = node;
+                        current.Prev = node;
+                    }
+
+                    count++;
+                    return true;
                 }
-            }
+                current = current?.Next;
+
+            } while (current != null);
+
             return false;
         }
         public override bool AddAfter(T nodeData, T item)
@@ -162,7 +159,9 @@ namespace DataStructures.LinkedList
                 return false;
 
             head = head.Next;
-            head.Prev = null;
+            if (head != null)
+                head.Prev = null;
+
             count--;
             return true;
         }
@@ -170,29 +169,28 @@ namespace DataStructures.LinkedList
         public override bool Remove(T item)
         {
             var current = head;
-            // If head node itself holds the key to be deleted 
-            if (current != null && (IsEquals(current.Data, item)))
+            do
             {
-                head = current.Next;   // Changed head 
-                current = null;       // free old head 
-                count--;
-                return true;
-            }
+                if (current != null && (IsEquals(current.Data, item)))
+                {
+                    if (current.Next != null)
+                        current.Next.Prev = current.Prev;
 
-            // Search for the key to be deleted, keep track of the 
-            // previous node as we need to change 'prev->next' 
-            while (current != null && !(IsEquals(current.Data, item)))
-            {
-                current = current.Next;
-            }
+                    if (current == head)
+                    {
+                        head = current.Next; // Changed head
+                        current = null;       // free old head 
+                    }
+                    else
+                        current.Prev.Next = current.Next;
 
-            // If key was not present in linked list 
-            if (current == null) return false;
+                    count--;
+                    return true;
+                }
+                current = current?.Next;
+            } while (current != null);
 
-            // Unlink the node from linked list 
-            current.Prev.Next = current.Next;
-            count--;
-            return true;
+            return false;
         }
 
         public override IEnumerable<T> Get()
@@ -228,19 +226,21 @@ namespace DataStructures.LinkedList
                 current = current.Next;
             }
         }
- 
+
         /// <summary>
         /// Get last node.
         /// </summary>
         /// <returns></returns>
-        public override T GetLast()
+        public override T GetLast() => GetData(GetLastNode());
+
+        private DoublyNode<T> GetLastNode()
         {
             var current = head;
-            while (current.Next != null)
+            while (current != null && current.Next != null)
                 current = current.Next;
 
-            return GetData(current);
+            return current;
         }
- 
+
     }
 }
