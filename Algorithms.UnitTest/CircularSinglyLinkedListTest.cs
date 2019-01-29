@@ -136,15 +136,15 @@ namespace Algorithms.UnitTest
 
             var list = new CircularSinglyLinkedList<int>(source);
 
-            Assert.AreEqual(list.GetFirst(), 1000, "invalid head element");
-            Assert.AreEqual(list.GetLast(), 1, "invalid tail element");
+            Assert.AreEqual(list.GetFirst(), 1, "invalid head element");
+            Assert.AreEqual(list.GetLast(), 1000, "invalid tail element");
             Assert.AreEqual(list.Count(), 1000, "invalid count");
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException), "Null collection doesn't allow.")]
         public void AddNullCollection()
         {
-            var list = new SinglyLinkedList<int>(null);
+            var list = new CircularSinglyLinkedList<int>(null);
         }
 
         [TestMethod]
@@ -332,7 +332,7 @@ namespace Algorithms.UnitTest
         [TestMethod]
         public void AddNullItem()
         {
-            var list = new SinglyLinkedList<string>();
+            var list = new CircularSinglyLinkedList<string>();
             list.AddFirst(null);
             list.AddLast(null);
             list.AddAfter(null, null);

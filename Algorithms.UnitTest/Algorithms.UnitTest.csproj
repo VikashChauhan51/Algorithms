@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CircularDoublyLinkedListTest.cs" />
     <Compile Include="CircularSinglyLinkedListTest.cs" />
     <Compile Include="DoublyLinkedListTest.cs" />
     <Compile Include="SinglyLinkedListTest.cs" />

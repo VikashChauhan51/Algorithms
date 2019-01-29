@@ -26,7 +26,7 @@ namespace DataStructures.LinkedList
                 throw new ArgumentNullException(nameof(collection));
 
             foreach (var item in collection)
-                AddFirst(item);
+                AddLast(item);
 
         }
         /// <summary>
@@ -219,7 +219,7 @@ namespace DataStructures.LinkedList
                 if (current != null)
                 {
                     yield return GetData(current);
-                    current = current?.Link;
+                    current = current.Link;
                 }
 
             } while (current != head);
@@ -245,8 +245,12 @@ namespace DataStructures.LinkedList
             var current = head;
             do
             {
-                array[index++] = GetData(current);
-                current = current?.Link;
+                if (current != null)
+                {
+                    array[index++] = GetData(current);
+                    current = current.Link;
+                }
+
 
             } while (current != head);
         }
