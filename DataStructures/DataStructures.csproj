@@ -58,5 +58,8 @@
     <Compile Include="Stack\LinkedListStack.cs" />
     <Compile Include="Stack\StackBase.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tree\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

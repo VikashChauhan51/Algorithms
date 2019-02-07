@@ -56,10 +56,10 @@ namespace DataStructures.Queue
                 {
                     if (item == null)
                     {
-                        if (items[count] == null)
+                        if (items[size] == null)
                             return true;
                     }
-                    else if (items[count] != null && item.Equals(items[count]))
+                    else if (items[size] != null && item.Equals(items[size]))
                         return true;
                 }
 

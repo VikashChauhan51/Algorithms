@@ -242,6 +242,15 @@ namespace DataStructures.LinkedList
 
         public override void CopyTo(T[] array, int index)
         {
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (index < 0 || index > array.Length)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            if (array.Length - index < count)
+                throw new ArgumentException(nameof(index));
+
             var current = head;
             do
             {
