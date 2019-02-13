@@ -9,6 +9,7 @@ namespace DataStructures.Queue
     public sealed class ArrayQueue<T> : QueueBased<T>
     {
         private T[] items;
+        private int head;
         private long count;
         public override long Count => count;
         static T[] emptyArray = new T[0];
@@ -86,8 +87,9 @@ namespace DataStructures.Queue
             if (count == 0)
                 throw new InvalidOperationException("Empty");
 
-            T item = items[0];
-            items[0] = default(T);
+            T item = items[head];
+            items[head] = default(T);
+            head= head + 1;
             count--;
             return item;
         }

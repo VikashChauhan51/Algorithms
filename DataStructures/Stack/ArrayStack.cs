@@ -84,8 +84,9 @@ namespace DataStructures.Stack
 
         public override IEnumerable<T> Get()
         {
-            for (int i = 0; i < count; i++)
-                yield return items[i];
+            var size = count;
+            while (--size >= 0)
+                yield return items[size];
         }
 
         public override bool Contains(T item)
