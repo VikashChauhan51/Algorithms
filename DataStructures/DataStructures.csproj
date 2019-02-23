@@ -57,9 +57,9 @@
     <Compile Include="Stack\ArrayStack.cs" />
     <Compile Include="Stack\LinkedListStack.cs" />
     <Compile Include="Stack\StackBase.cs" />
+    <Compile Include="Tree\Tree.cs" />
+    <Compile Include="Tree\TreeNode.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tree\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
