@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures.Tree
 {
-    public class TreeNode<T> : IComparable where T : IComparable
+    public class TreeNode<T> : IComparable<T> where T : IComparable
     {
         private T _value;
         private TreeNode<T> _parent;
@@ -74,10 +74,7 @@ namespace DataStructures.Tree
         {
             return this.children.Get().FirstOrDefault();
         }
-        public int CompareTo(object obj)
-        {
-            return Value.CompareTo(obj as TreeNode<T>);
-        }
+        public int CompareTo(T obj) => Value.CompareTo(obj);
 
     }
 }

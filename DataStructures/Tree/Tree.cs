@@ -12,7 +12,11 @@ namespace DataStructures.Tree
     {
         private TreeNode<T> _root;
         private long _count;
+        public bool IsEmpty => this._root == null;
+        public Tree()
+        {
 
+        }
         /// <summary>Constructs the tree</summary>
         /// <param name="value">the value of the node</param>
         public Tree(T value)
@@ -74,7 +78,7 @@ namespace DataStructures.Tree
         public void Delete(T value)=> Delete(_root.Value, value);
         private TreeNode<T> Find(TreeNode<T> parent, T value)
         {
-            if (parent == null || parent.Value.CompareTo(value) == 0)
+            if (parent == null || parent.CompareTo(value) == 0)
                 return parent;
 
             foreach (var child in parent.Children)
