@@ -51,6 +51,7 @@ namespace DataStructures.Tree
         /// Time complexity:  O(n)
         /// </summary>
         public int GetHeight() => GetHeight(_root);
+        public TreeNode<T> GetNode(T value) => Find(_root, value);
 
         /// <summary>
         /// Time complexity:  O(n)

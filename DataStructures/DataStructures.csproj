@@ -59,6 +59,7 @@
     <Compile Include="Stack\StackBase.cs" />
     <Compile Include="Tree\BinaryTree.cs" />
     <Compile Include="Tree\BinaryTreeNode.cs" />
+    <Compile Include="Tree\RedBlackTreeNode.cs" />
     <Compile Include="Tree\Tree.cs" />
     <Compile Include="Tree\TreeNode.cs" />
   </ItemGroup>

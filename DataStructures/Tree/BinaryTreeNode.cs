@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataStructures.Tree
 {
@@ -18,11 +15,44 @@ namespace DataStructures.Tree
         public BinaryTreeNode<T> Left { get => _left; set => _left = value; }
         public BinaryTreeNode<T> Right { get => _right; set => _right = value; }
         public BinaryTreeNode<T> Parent { get => _parent; set => _parent = value; }
+        public BinaryTreeNode<T> Sibling => Parent.Left == this ?
+                                                Parent.Right : Parent.Left;
+        public BinaryTreeNode()
+        {
+
+        }
         public BinaryTreeNode(T value)
         {
             this._value = value;
         }
-        
-        public int CompareTo(T obj)=> Value.CompareTo(obj);
+
+        public int CompareTo(T obj)
+        {
+            if (Value == null)
+                return obj == null ? 0 : -1;
+            else
+                return Value.CompareTo(obj);
+
+        }
+        public IEnumerable<BinaryTreeNode<T>> Ancestors()
+        {
+            var current = this.Parent;
+            while (current != null)
+            {
+                yield return current;
+                current = current.Parent;
+            }
+        }
+        public IEnumerable<BinaryTreeNode<T>> Descendants() => Descendants(this, new List<BinaryTreeNode<T>>());
+        private IEnumerable<BinaryTreeNode<T>> Descendants(BinaryTreeNode<T> node, List<BinaryTreeNode<T>> items)
+        {
+            if (node != null)
+            {
+                items.Add(node);
+                Descendants(node.Left, items);
+                Descendants(node.Right, items);
+            }
+            return items;
+        }
     }
 }

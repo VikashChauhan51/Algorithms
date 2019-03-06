@@ -33,11 +33,13 @@ namespace Algorithms.UnitTest
                 this.tree.Insert(this.tree.Root.Value, i);
 
             this.tree.Insert(5, 7);
+            this.tree.Insert(5, 8);
+            this.tree.Insert(8, 9);
 
             Assert.AreEqual(tree.Root.Value, 1, "invalid root element");
-            Assert.AreEqual(tree.Count, 7, "invalid count");
+            Assert.AreEqual(tree.Count, 9, "invalid count");
             Assert.AreEqual(tree.Root.ChildrenCount, 5, "invalid count");
-            Assert.AreEqual(tree.GetHeight(), 2, "invalid tree height");
+            Assert.AreEqual(tree.GetHeight(), 3, "invalid tree height");
 
         }
 
